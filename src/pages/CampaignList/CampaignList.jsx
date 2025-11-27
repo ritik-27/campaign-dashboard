@@ -71,12 +71,12 @@ const CampaignList = () => {
       <div className={styles.filters}>
         <Select
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          onChange={(e) => filterCampaigns(e.target.value)}
           size="small"
           displayEmpty
           startAdornment={<FilterListIcon sx={{ mr: 1 }} />}
         >
-          <MenuItem value="All">All Status</MenuItem>
+          <MenuItem value="all">All Status</MenuItem>
           {Object.values(CAMPAIGN_STATUS).map((status) => (
             <MenuItem key={status} value={status}>
               {status}
