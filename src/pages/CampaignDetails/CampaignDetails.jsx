@@ -3,6 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StatusBadge from '../../components/campaign/StatusBadge/StatusBadge';
+import WhatsAppPreview from '../../components/campaign/WhatsAppPreview/WhatsAppPreview';
+import CampaignStats from '../../components/campaign/CampaignStats/CampaignStats';
 import { getCampaignById } from '../../services/campaignService';
 import styles from './CampaignDetails.module.css';
 
@@ -14,6 +16,12 @@ const CampaignDetails = () => {
   if (!campaign) {
     return <div>Campaign not found</div>;
   }
+  const stats = [
+    { label: 'Sent', value: campaign.stats.sent.toLocaleString() },
+    { label: 'Delivered', value: campaign.stats.delivered.toLocaleString() },
+    { label: 'Response', value: campaign.stats.response.toLocaleString() },
+    { label: 'Conversation', value: campaign.stats.conversation.toLocaleString() }
+  ];
 
   return (
     <div className={styles.container}>
@@ -32,6 +40,7 @@ const CampaignDetails = () => {
 
       <div className={styles.content}>
         <div className={styles.mainSection}>
+          <CampaignStats stats={stats} />
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>To</h3>
             <div className={styles.toSection}>
@@ -58,7 +67,9 @@ const CampaignDetails = () => {
             </Alert>
           </div>
         </div>
-
+        <div className={styles.sidePanel}>
+          <WhatsAppPreview />
+        </div>
       </div>
     </div>
   );
