@@ -18,24 +18,19 @@ import { campaignsData, filterCampaigns as filterCampaignsService } from '../../
 
 const CampaignList = () => {
   const [activeTab, setActiveTab] = useState('all');
-  const [campaigns, setCampaigns] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    setCampaigns(campaignsData);
-  }, []);
+  const filteredCampaigns = useMemo(() => {
+    return filterCampaignsService(campaignsData, searchTerm, statusFilter);
+  }, [searchTerm, statusFilter]);
 
   const handleStatusFilter = (status) => {
     setStatusFilter(status);
-    const filtered = filterCampaignsService(campaignsData, searchTerm, status);
-    setCampaigns(filtered);
   };
 
   const handleSearch = (search) => {
     setSearchTerm(search);
-    const filtered = filterCampaignsService(campaignsData, search, statusFilter);
-    setCampaigns(filtered);
   };
 
   return (
@@ -98,7 +93,7 @@ const CampaignList = () => {
         </Select>
       </div>
 
-      <CampaignTable campaigns={campaigns} />
+      <CampaignTable campaigns={filteredCampaigns} />
 
     </div>
   );
