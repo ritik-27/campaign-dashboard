@@ -1,22 +1,39 @@
 import { useState, useMemo, useEffect } from 'react';
 import {
-  Button
+  Button,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {
   Add as AddIcon,
+  FilterList as FilterListIcon,
 } from '@mui/icons-material';
 import styles from './CampaignList.module.css';
 import CampaignTable from '../../components/campaign/CampaignTable/CampaignTable';
+import { CAMPAIGN_STATUS } from '../../utils/constants';
 import { campaignsData } from '../../data/campaignsData';
 
 
 const CampaignList = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [campaigns, setCampaigns] = useState([]);
+  const [statusFilter, setStatusFilter] = useState('all');
 
   useEffect(() => {
     setCampaigns(campaignsData);
   }, []);
+
+  const filterCampaigns = (status) => {
+    setStatusFilter(status);
+    if (status === 'all') {
+      setCampaigns(campaignsData);
+    } else {
+      const filtered = campaignsData.filter(
+        (campaign) => campaign.status.toLowerCase() === status.toLowerCase()
+      );
+      setCampaigns(filtered);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -51,7 +68,24 @@ const CampaignList = () => {
           </Button>
         </div>
       </div>
-        <CampaignTable campaigns={campaigns} />
+      <div className={styles.filters}>
+        <Select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          size="small"
+          displayEmpty
+          startAdornment={<FilterListIcon sx={{ mr: 1 }} />}
+        >
+          <MenuItem value="All">All Status</MenuItem>
+          {Object.values(CAMPAIGN_STATUS).map((status) => (
+            <MenuItem key={status} value={status}>
+              {status}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+
+      <CampaignTable campaigns={campaigns} />
 
     </div>
   );
