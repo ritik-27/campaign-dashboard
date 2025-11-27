@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   IconButton,
   Menu,
@@ -18,19 +19,26 @@ import styles from './CampaignTable.module.css';
 
 const CampaignTable = ({ campaigns }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const navigate = useNavigate();
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
   const handleMenuClick = (event, campaign) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
+    setSelectedCampaign(campaign);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setSelectedCampaign(null);
   };
 
   const handleMenuAction = (action) => {
-    console.log(`${action} campaign`);
+    console.log(`${action} campaign`, selectedCampaign);
     handleMenuClose();
+  };
+  
+  const handleRowClick = (campaignId) => {
+    navigate(`/campaigns/${campaignId}`);
   };
 
   return (
@@ -51,6 +59,8 @@ const CampaignTable = ({ campaigns }) => {
           {campaigns.map((campaign) => (
             <tr 
               key={campaign.id}
+              onClick={() => handleRowClick(campaign.id)}
+              className={styles.tableRow}
             >
               <td>
                 <div className={styles.campaignName}>

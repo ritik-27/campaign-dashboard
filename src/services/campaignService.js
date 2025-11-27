@@ -16,5 +16,9 @@ export const filterCampaigns = (campaigns, searchTerm, statusFilter) => {
 
   return filtered;
 };
-// Re-export campaignsData for convenience
+
+export const getCampaignById = (id) => {
+  return campaignsData.find(campaign => campaign.id === parseInt(id));
+};
+
 export { campaignsData } from '../data/campaignsData';
