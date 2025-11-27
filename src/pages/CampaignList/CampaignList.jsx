@@ -93,7 +93,13 @@ const CampaignList = () => {
         </Select>
       </div>
 
-      <CampaignTable campaigns={filteredCampaigns} />
+      {filteredCampaigns.length > 0 ? (
+        <CampaignTable campaigns={filteredCampaigns} />
+      ) : (
+        <div className={styles.emptyState}>
+          <p>No campaigns to display</p>
+        </div>
+      )}
 
     </div>
   );
