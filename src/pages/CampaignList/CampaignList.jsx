@@ -3,36 +3,39 @@ import {
   Button,
   Select,
   MenuItem,
+  InputBase,
 } from '@mui/material';
 import {
   Add as AddIcon,
   FilterList as FilterListIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material';
 import styles from './CampaignList.module.css';
 import CampaignTable from '../../components/campaign/CampaignTable/CampaignTable';
 import { CAMPAIGN_STATUS } from '../../utils/constants';
-import { campaignsData } from '../../data/campaignsData';
+import { campaignsData, filterCampaigns as filterCampaignsService } from '../../services/campaignService';
 
 
 const CampaignList = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [campaigns, setCampaigns] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     setCampaigns(campaignsData);
   }, []);
 
-  const filterCampaigns = (status) => {
+  const handleStatusFilter = (status) => {
     setStatusFilter(status);
-    if (status === 'all') {
-      setCampaigns(campaignsData);
-    } else {
-      const filtered = campaignsData.filter(
-        (campaign) => campaign.status.toLowerCase() === status.toLowerCase()
-      );
-      setCampaigns(filtered);
-    }
+    const filtered = filterCampaignsService(campaignsData, searchTerm, status);
+    setCampaigns(filtered);
+  };
+
+  const handleSearch = (search) => {
+    setSearchTerm(search);
+    const filtered = filterCampaignsService(campaignsData, search, statusFilter);
+    setCampaigns(filtered);
   };
 
   return (
@@ -69,9 +72,19 @@ const CampaignList = () => {
         </div>
       </div>
       <div className={styles.filters}>
+        <div className={styles.searchBar}>
+          <SearchIcon className={styles.searchIcon} />
+          <InputBase
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
+
         <Select
           value={statusFilter}
-          onChange={(e) => filterCampaigns(e.target.value)}
+          onChange={(e) => handleStatusFilter(e.target.value)}
           size="small"
           displayEmpty
           startAdornment={<FilterListIcon sx={{ mr: 1 }} />}
