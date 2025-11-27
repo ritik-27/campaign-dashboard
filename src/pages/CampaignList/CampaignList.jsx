@@ -6,9 +6,17 @@ import {
   Add as AddIcon,
 } from '@mui/icons-material';
 import styles from './CampaignList.module.css';
+import CampaignTable from '../../components/campaign/CampaignTable/CampaignTable';
+import { campaignsData } from '../../data/campaignsData';
+
 
 const CampaignList = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const [campaigns, setCampaigns] = useState([]);
+
+  useEffect(() => {
+    setCampaigns(campaignsData);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -43,6 +51,7 @@ const CampaignList = () => {
           </Button>
         </div>
       </div>
+        <CampaignTable campaigns={campaigns} />
 
     </div>
   );

@@ -1,3 +1,21 @@
+export const CAMPAIGN_STATUS = {
+  DRAFT: 'Draft',
+  SCHEDULED: 'Scheduled',
+  ONGOING: 'Ongoing',
+  COMPLETED: 'Completed',
+  ABORTED: 'Aborted',
+  APPROVAL_PENDING: 'Approval pending'
+};
+
+export const STATUS_COLORS = {
+  [CAMPAIGN_STATUS.DRAFT]: '#757575',
+  [CAMPAIGN_STATUS.SCHEDULED]: '#2196F3',
+  [CAMPAIGN_STATUS.ONGOING]: '#FF9800',
+  [CAMPAIGN_STATUS.COMPLETED]: '#4CAF50',
+  [CAMPAIGN_STATUS.ABORTED]: '#F44336',
+  [CAMPAIGN_STATUS.APPROVAL_PENDING]: '#FF9800'
+};
+
 export const SIDEBAR_ITEMS = [
   { icon: 'home', label: 'Home', path: '/dashboard' },
   { icon: 'people', label: 'Contacts', path: '/contacts' },
@@ -10,12 +28,3 @@ export const SIDEBAR_ITEMS = [
   { icon: 'security', label: 'Security', path: '/security' },
   { icon: 'lightbulb', label: 'Ideas', path: '/ideas' }
 ];
-
-export const STATUS_COLORS = {
-  [CAMPAIGN_STATUS.DRAFT]: '#757575',
-  [CAMPAIGN_STATUS.SCHEDULED]: '#2196F3',
-  [CAMPAIGN_STATUS.ONGOING]: '#FF9800',
-  [CAMPAIGN_STATUS.COMPLETED]: '#4CAF50',
-  [CAMPAIGN_STATUS.ABORTED]: '#F44336',
-  [CAMPAIGN_STATUS.APPROVAL_PENDING]: '#FF9800'
-};
