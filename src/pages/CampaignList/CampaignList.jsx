@@ -12,25 +12,42 @@ import {
 } from '@mui/icons-material';
 import styles from './CampaignList.module.css';
 import CampaignTable from '../../components/campaign/CampaignTable/CampaignTable';
+import Pagination from '../../components/campaign/Pagination/Pagination';
 import { CAMPAIGN_STATUS } from '../../utils/constants';
 import { campaignsData, filterCampaigns as filterCampaignsService } from '../../services/campaignService';
 
+const ROWS_PER_PAGE = 5;
 
 const CampaignList = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredCampaigns = useMemo(() => {
     return filterCampaignsService(campaignsData, searchTerm, statusFilter);
   }, [searchTerm, statusFilter]);
 
+  const totalPages = Math.ceil(filteredCampaigns.length / ROWS_PER_PAGE);
+
+  const paginatedCampaigns = useMemo(() => {
+    const startIndex = (currentPage - 1) * ROWS_PER_PAGE;
+    const endIndex = startIndex + ROWS_PER_PAGE;
+    return filteredCampaigns.slice(startIndex, endIndex);
+  }, [filteredCampaigns, currentPage]);
+
   const handleStatusFilter = (status) => {
     setStatusFilter(status);
+    setCurrentPage(1);
   };
 
   const handleSearch = (search) => {
     setSearchTerm(search);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -93,8 +110,15 @@ const CampaignList = () => {
         </Select>
       </div>
 
-      {filteredCampaigns.length > 0 ? (
-        <CampaignTable campaigns={filteredCampaigns} />
+      {paginatedCampaigns.length > 0 ? (
+        <>
+          <CampaignTable campaigns={paginatedCampaigns} />
+          <Pagination 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       ) : (
         <div className={styles.emptyState}>
           <p>No campaigns to display</p>
