@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StatusBadge from '../../components/campaign/StatusBadge/StatusBadge';
 import WhatsAppPreview from '../../components/campaign/WhatsAppPreview/WhatsAppPreview';
 import CampaignStats from '../../components/campaign/CampaignStats/CampaignStats';
+import CampaignInfo from '../../components/campaign/CampaignInfo/CampaignInfo';
 import { getCampaignById } from '../../services/campaignService';
 import styles from './CampaignDetails.module.css';
 
@@ -33,14 +34,18 @@ const CampaignDetails = () => {
           <h1 className={styles.title}>{campaign.name}</h1>
           <StatusBadge status={campaign.status} />
         </div>
-        <Alert severity="info" className={styles.headerAlert}>
-          Out of <strong>{campaign.details.totalRecipients.toLocaleString()}</strong> we have found <strong>{campaign.stats.sent.toLocaleString()}</strong> valid numbers!
-        </Alert>
+        {campaign.status !== 'Draft' && (
+          <Alert severity="info" className={styles.headerAlert}>
+            Out of <strong>{campaign.details.totalRecipients.toLocaleString()}</strong> we have found <strong>{campaign.stats.sent.toLocaleString()}</strong> valid numbers!
+          </Alert>
+        )}
       </div>
 
       <div className={styles.content}>
         <div className={styles.mainSection}>
           <CampaignStats stats={stats} />
+          <CampaignInfo campaign={campaign} />
+
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>To</h3>
             <div className={styles.toSection}>
@@ -60,12 +65,14 @@ const CampaignDetails = () => {
             <p>Send only to Opted-in numbers</p>
           </div>
 
-          <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>When</h3>
-            <Alert severity="info" className={styles.dateAlert}>
-              The message sent on <strong>{campaign.createdOn}</strong>
-            </Alert>
-          </div>
+          {campaign.status !== 'Draft' && (
+            <div className={styles.section}>
+              <h3 className={styles.sectionTitle}>When</h3>
+              <Alert severity="info" className={styles.dateAlert}>
+                The message sent on <strong>{campaign.createdOn}</strong>
+              </Alert>
+            </div>
+          )}
         </div>
         <div className={styles.sidePanel}>
           <WhatsAppPreview />

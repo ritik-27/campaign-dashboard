@@ -27,15 +27,33 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 24px;
+  grid-template-columns: 1fr 550px;
+  gap: 15px;
   flex: 1;
   overflow: hidden;
 }
 
+
+.mainSection::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mainSection::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mainSection::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 3px;
+}
+
+.mainSection::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
 .mainSection {
   overflow-y: auto;
-  padding-right: 8px;
+  padding-right: 30px;
 }
 
 .statsGrid {
