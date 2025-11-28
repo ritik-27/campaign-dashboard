@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.content {
+  text-align: center;
+  max-width: 500px;
+
+}
+
+.icon {
+  font-size: 80px !important;
+  color: var(--primary-color);
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.message {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.submessage {
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  line-height: 1.5;
+}
