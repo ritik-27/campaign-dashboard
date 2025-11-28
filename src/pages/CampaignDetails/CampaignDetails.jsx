@@ -4,8 +4,8 @@ import Alert from '@mui/material/Alert';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StatusBadge from '../../components/campaign/StatusBadge/StatusBadge';
 import WhatsAppPreview from '../../components/campaign/WhatsAppPreview/WhatsAppPreview';
-import CampaignStats from '../../components/campaign/CampaignStats/CampaignStats';
 import CampaignInfo from '../../components/campaign/CampaignInfo/CampaignInfo';
+import CampaignChart from '../../components/campaign/CampaignChart/CampaignChart';
 import { getCampaignById } from '../../services/campaignService';
 import styles from './CampaignDetails.module.css';
 
@@ -17,11 +17,25 @@ const CampaignDetails = () => {
   if (!campaign) {
     return <div>Campaign not found</div>;
   }
+
   const stats = [
     { label: 'Sent', value: campaign.stats.sent.toLocaleString() },
     { label: 'Delivered', value: campaign.stats.delivered.toLocaleString() },
     { label: 'Response', value: campaign.stats.response.toLocaleString() },
     { label: 'Conversation', value: campaign.stats.conversation.toLocaleString() }
+  ];
+
+  const additionalStats = [
+    { 
+      label: 'Valid Number', 
+      value: `${campaign.stats.validNumbers}%`
+    },
+    { 
+      label: 'Invalid Numbers', 
+      value: campaign.stats.invalidNumbers 
+    },
+    { label: 'Opt-out', value: `${campaign.stats.optOut}%` },
+    { label: 'Response rate', value: `${campaign.stats.responseRate}%` }
   ];
 
   return (
@@ -43,7 +57,7 @@ const CampaignDetails = () => {
 
       <div className={styles.content}>
         <div className={styles.mainSection}>
-          <CampaignStats stats={stats} />
+          <CampaignChart stats={stats} chartData={campaign.chartData} additionalStats={additionalStats} />
           <CampaignInfo campaign={campaign} />
 
           <div className={styles.section}>
