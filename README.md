@@ -60,6 +60,30 @@ Run ESLint to check code quality:
 npm run lint
 ```
 
+
+## Screenshots
+
+### Dashboard
+![Dashboard](./src/assets/images/dashboard.png)
+
+### Campaign List
+![Campaign List](./src/assets/images/campaign_list_1.png)
+
+![Campaign List](./src/assets/images/campaign_list_2.png)
+
+![Campaign List](./src/assets/images/campaign_list_3.png)
+
+### Campaign Details
+![Campaign Details](./src/assets/images/campaign_details_1.png)
+
+![Campaign Details](./src/assets/images/campaign_details_2.png)
+
+![Campaign Details](./src/assets/images/campaign_details_3.png)
+
+### Coming Soon
+![Commng Soon](./src/assets/images/dashboard.png)
+
+
 ## Project Structure
 
 ```
